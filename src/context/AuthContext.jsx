@@ -1,5 +1,6 @@
 import { createContext, useContext, useEffect, useState } from "react";
 import { supabase } from "../supabase_client";
+import { data } from "react-router-dom";
 
 const AuthContext = createContext(undefined)
 
@@ -55,6 +56,9 @@ export function AuthContextProvider ({children}){
     const { data: authListener } = supabase.auth.onAuthStateChange((_event, session) => {
         setSession(session);
     });
+
+    return()=>{authListener.subscription.unsubscribe()}
+    
 }, []);
 
 
